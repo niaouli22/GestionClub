@@ -25,3 +25,4 @@ echo "Bonjour " . $nom;
 Route::get('nouvellepage', 'MonControleur@retourneNouvellePage');
 Route::get('exemple', 'MonControleur@retournePageExemple');
 Route::get('membres', 'ControleurMembres@index');
+Route::get('membrescss', 'ControleurMembrescss@index');

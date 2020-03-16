@@ -26,3 +26,8 @@ Route::get('nouvellepage', 'MonControleur@retourneNouvellePage');
 Route::get('exemple', 'MonControleur@retournePageExemple');
 Route::get('membres', 'ControleurMembres@index');
 Route::get('membrescss', 'ControleurMembrescss@index');
+Route::get('membre/{numero}', 'ControleurMembres@afficher');
+Route::get('creer', 'ControleurMembres@creer');
+Route::post('creation/membre', 'ControleurMembres@enregistrer');
+Route::get('modifier/{id}', 'ControleurMembres@editer');
+Route::patch('miseAJour/{id}', 'ControleurMembres@miseAJour');

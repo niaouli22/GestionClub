@@ -39,7 +39,7 @@
 
 <body>
     <div class='container'>
-    @include('pages_site/navbar')
+    <?php echo $__env->make('pages_site/navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class='content'>
             <div class='title'>Bienvenue</div>
             <div class='container'>
@@ -54,4 +54,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 
-</html>
+</html><?php /**PATH /home/jeremy/Documents/GestionClub/resources/views/nouvellepage.blade.php ENDPATH**/ ?>

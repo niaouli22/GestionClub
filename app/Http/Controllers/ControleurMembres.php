@@ -34,12 +34,21 @@ class ControleurMembres extends Controller
         $membre->adresse = $request->adresse;
         $membre->prenom = $request->prenom;
         $membre->save();
-        return "Membre créé";
+        // Ajout d'une page de confirmation lorsqu'un membre est créé
+        $confirmation = "Membre créé";
+        return view('pages_site/confirmation', compact('confirmation'));
     } 
     
     public function editer($numero) {
         $un_membre = $this->les_membres->find($numero);
-        return view('pages_site/edition', compact('un_membre'));
+        // Utilisation de condition pour rediriger la page de modification vers l'erreur 404 
+        // dans le cas où le numéro ne correspond pas un membre existant
+        if ($un_membre = $un_membre){
+            return view('pages_site/edition', compact('un_membre'));
+        }
+        else{
+            return Redirect('errors/404');
+        }
     } 
     
     public function miseAJour($numero) {
@@ -49,6 +58,8 @@ class ControleurMembres extends Controller
         $un_membre->prenom =$la_soumission->prenom;
         $un_membre->adresse =$la_soumission->adresse;
         $un_membre->save();
-        return "Membre modifié";
+        // Ajout d'une page de confirmation lorsqu'un membre est modifié
+        $confirmation = "Membre modifié";
+        return view('pages_site/confirmation', compact('confirmation'));
     }
 }

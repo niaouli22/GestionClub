@@ -1,3 +1,4 @@
+@extends('pages_site/fond')
 @section('entete')
 @stop
 @section('titre')
@@ -14,12 +15,17 @@ Modification des infos du membre
 {{ Form::text('nom') }}
 </div>
 <div class="formgroup">
-{{ Form::label('prenom', 'Prenom :') }}
+{{ Form::label('prenom', 'Prénom :') }}
 {{ Form::text('prenom') }}
 </div>
 <div class="formgroup">
 {{ Form::label('adresse', 'Adresse électronique') }}
 {{ Form::text('adresse') }}
+</div>
+
+<div class="formgroup">
+    {!! Form::label('description', 'Description') !!}
+    {!! Form::text('description', null, ['class' => 'formcontrol', 'required'])!!}
 </div>
 <p>
 </p>

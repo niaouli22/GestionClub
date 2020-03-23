@@ -28,6 +28,7 @@ Création d'un nouveau membre
         <?php echo Form::text('adresse', null, ['class' => 'formcontrol', 'required|email']); ?>
 
     </div>
+    <!-- Ajout du champ description pour la biographie -->
     <div class="formgroup">
         <?php echo Form::label('description', 'Description'); ?>
 

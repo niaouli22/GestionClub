@@ -1,3 +1,5 @@
+<!-- Refonte de la page par defaut de l'erreur 404 --> 
+
 <?php $__env->startSection('entete'); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('titre'); ?>

@@ -1,7 +1,7 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-class Membre extends Model
+class Biographie extends Model
 {
-protected $fillable = [ 'nom', 'prenom', 'adresse' ];
+protected $fillable = [ 'id_membre', 'description' ];
 }

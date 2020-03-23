@@ -22,7 +22,7 @@ Modification des infos du membre
 {{ Form::label('adresse', 'Adresse électronique') }}
 {{ Form::text('adresse') }}
 </div>
-
+<!-- Ajout du champ description pour la biographie -->
 <div class="formgroup">
     {!! Form::label('description', 'Description') !!}
     {!! Form::text('description', null, ['class' => 'formcontrol', 'required'])!!}

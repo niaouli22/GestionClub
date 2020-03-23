@@ -28,7 +28,7 @@ Modification des infos du membre
 <?php echo e(Form::text('adresse')); ?>
 
 </div>
-
+<!-- Ajout du champ description pour la biographie -->
 <div class="formgroup">
     <?php echo Form::label('description', 'Description'); ?>
 

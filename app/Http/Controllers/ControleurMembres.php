@@ -4,14 +4,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 // Obligatoire pour avoir accès au modèle
 use App\Membre;
+use App\Biographie;
 
 class ControleurMembres extends Controller
 {
     // des variables
     protected $les_membres;
+    protected $les_biographies;
     protected $soumissions;
-    public function __construct( Membre $membres, Request $requetes) {
+    public function __construct( Membre $membres, Biographie $biographies, Request $requetes) {
         $this->les_membres = $membres;
+        $this->les_biographies = $biographies;
         $this->soumissions = $requetes;
     }
     
@@ -34,6 +37,11 @@ class ControleurMembres extends Controller
         $membre->adresse = $request->adresse;
         $membre->prenom = $request->prenom;
         $membre->save();
+        // Enregistrement lors de l'ajout d'une description en fonction de l'id membre
+        $une_biographie = new biographie();
+        $une_biographie->description = $request->description;
+        $une_biographie->id_membre = $membre->id;
+        $une_biographie->save();
         // Ajout d'une page de confirmation lorsqu'un membre est créé
         $confirmation = "Membre créé";
         return view('pages_site/confirmation', compact('confirmation'));
@@ -44,6 +52,14 @@ class ControleurMembres extends Controller
         // Utilisation de condition pour rediriger la page de modification vers l'erreur 404 
         // dans le cas où le numéro ne correspond pas un membre existant
         if ($un_membre = $un_membre){
+            // Editer le champ description
+            $une_biographie = $this->les_biographies->where('id_membre', $un_membre->id)->first();
+            if ($une_biographie = $une_biographie){
+            $un_membre->description = $une_biographie->description;
+            }
+            else {
+            $un_membre->description = "";
+            }
             return view('pages_site/edition', compact('un_membre'));
         }
         else{
@@ -58,6 +74,19 @@ class ControleurMembres extends Controller
         $un_membre->prenom =$la_soumission->prenom;
         $un_membre->adresse =$la_soumission->adresse;
         $un_membre->save();
+        // Enregistrer le champ description
+        $une_biographie = $this->les_biographies->where('id_membre', $un_membre->id)->first();
+        if ($une_biographie == null) {
+            $une_biographie = new biographie();
+            $une_biographie->description = $la_soumission->description;
+            $une_biographie->id_membre = $la_soumission->id;
+        }
+        // if a user have no description, create a new one for it
+        else
+        {
+            $une_biographie->description = $la_soumission->description;
+        }
+        $une_biographie->save();
         // Ajout d'une page de confirmation lorsqu'un membre est modifié
         $confirmation = "Membre modifié";
         return view('pages_site/confirmation', compact('confirmation'));

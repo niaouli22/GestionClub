@@ -15,6 +15,9 @@ class CreerTableBiographies extends Migration
     {
         Schema::create('biographies', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_membre')->unsigned();
+            $table->string('description')->default('valeur par défaut');
+            $table->foreign('id_membre')->references('id')->on('membres');
             $table->timestamps();
         });
     }

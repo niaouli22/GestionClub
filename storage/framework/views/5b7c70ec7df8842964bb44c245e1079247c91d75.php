@@ -1,3 +1,5 @@
+<!-- Page de confirmation  --> 
+
 <?php $__env->startSection('entete'); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('titre'); ?>

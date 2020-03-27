@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+//Pour accéder à l'authentification
+use Illuminate\Support\Facades\Auth;
 // Obligatoire pour avoir accès au modèle
 use App\Membre;
 use App\Biographie;
@@ -91,4 +93,21 @@ class ControleurMembres extends Controller
         $confirmation = "Membre modifié";
         return view('pages_site/confirmation', compact('confirmation'));
     }
+
+    public function identite() {
+        if (Auth::check())
+        {
+        $utilisateur = Auth::user();
+        $id = Auth::id();
+        return view('pages_site/identite',compact('utilisateur','id'));
+        }
+        else
+        echo "<h1>Accès non autorisé</h1>";
+        }
+    
+    public function acces_protege() {
+        $infos_utilisateur = Auth::user();
+        $utilisateur = $infos_utilisateur->name;
+        echo "<h1>Utilisateur authentifié : ".$utilisateur."</h1>";
+        }
 }

@@ -31,3 +31,7 @@ Route::get('creer', 'ControleurMembres@creer');
 Route::post('creation/membre', 'ControleurMembres@enregistrer');
 Route::get('modifier/{id}', 'ControleurMembres@editer');
 Route::patch('miseAJour/{id}', 'ControleurMembres@miseAJour');
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/identite','ControleurMembres@identite');
+Route::get('/protege','ControleurMembres@acces_protege')->middleware('auth');

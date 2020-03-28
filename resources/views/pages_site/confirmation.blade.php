@@ -10,7 +10,7 @@ Page de confirmation
 @stop
 @section('contenu')
 
-<h3>{{$confirmation}} réussi</h3>
+<h3>{{$confirmation}}</h3>
 
 <a href="{{ url('/membres') }}">Retourner à la liste des membres</a>
 @stop

@@ -10,7 +10,7 @@ Page de confirmation
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('contenu'); ?>
 
-<h3><?php echo e($confirmation); ?> réussi</h3>
+<h3><?php echo e($confirmation); ?></h3>
 
 <a href="<?php echo e(url('/membres')); ?>">Retourner à la liste des membres</a>
 <?php $__env->stopSection(); ?>

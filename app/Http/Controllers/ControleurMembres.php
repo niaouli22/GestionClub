@@ -50,22 +50,30 @@ class ControleurMembres extends Controller
     } 
     
     public function editer($numero) {
-        $un_membre = $this->les_membres->find($numero);
-        // Utilisation de condition pour rediriger la page de modification vers l'erreur 404 
-        // dans le cas où le numéro ne correspond pas un membre existant
-        if ($un_membre = $un_membre){
-            // Editer le champ description
-            $une_biographie = $this->les_biographies->where('id_membre', $un_membre->id)->first();
-            if ($une_biographie = $une_biographie){
-            $un_membre->description = $une_biographie->description;
+        // Autorisation d'édition si l'utilisateur est authentifié
+        if (Auth::check()){
+            $un_membre = $this->les_membres->find($numero);
+            // Utilisation de condition pour rediriger la page de modification vers l'erreur 404 
+            // dans le cas où le numéro ne correspond pas un membre existant
+            if ($un_membre = $un_membre){
+                // Editer le champ description
+                $une_biographie = $this->les_biographies->where('id_membre', $un_membre->id)->first();
+                if ($une_biographie = $une_biographie){
+                $un_membre->description = $une_biographie->description;
+                }
+                else {
+                $un_membre->description = "";
+                }
+                return view('pages_site/edition', compact('un_membre'));
             }
-            else {
-            $un_membre->description = "";
+            else{
+                return Redirect('errors/404');
             }
-            return view('pages_site/edition', compact('un_membre'));
         }
-        else{
-            return Redirect('errors/404');
+        // Interdire l'accès quand on saisi dans l'URL existant ex: /modifier/2 lorsqu'on n'est pas authentifié
+        else {
+            $confirmation = "Vous n'avez pas les droits";
+            return view('pages_site/confirmation', compact('confirmation'));
         }
     } 
     
@@ -83,31 +91,37 @@ class ControleurMembres extends Controller
             $une_biographie->description = $la_soumission->description;
             $une_biographie->id_membre = $la_soumission->id;
         }
-        // if a user have no description, create a new one for it
         else
         {
             $une_biographie->description = $la_soumission->description;
         }
-        $une_biographie->save();
-        // Ajout d'une page de confirmation lorsqu'un membre est modifié
-        $confirmation = "Membre modifié";
-        return view('pages_site/confirmation', compact('confirmation'));
+        // Modification d'un membre lorsque le mail de l'utilisateur authentifié correspond au membre a modifier 
+        if ($une_biographie->adresse != Auth::user()->email) {
+            $confirmation = "La modification n'a pas pu être réalisée";
+            return view('pages_site/confirmation', compact('confirmation'));
+        }
+        else{
+            $une_biographie->save();
+            // Ajout d'une page de confirmation lorsqu'un membre est modifié
+            $confirmation = "Membre modifié";
+            return view('pages_site/confirmation', compact('confirmation'));
+        }
     }
 
     public function identite() {
-        if (Auth::check())
-        {
-        $utilisateur = Auth::user();
-        $id = Auth::id();
-        return view('pages_site/identite',compact('utilisateur','id'));
+        if (Auth::check()){
+            $utilisateur = Auth::user();
+            $id = Auth::id();
+            return view('pages_site/identite',compact('utilisateur','id'));
         }
-        else
-        echo "<h1>Accès non autorisé</h1>";
+        else {
+            echo "<h1>Accès non autorisé</h1>";
         }
+    }
     
     public function acces_protege() {
         $infos_utilisateur = Auth::user();
         $utilisateur = $infos_utilisateur->name;
         echo "<h1>Utilisateur authentifié : ".$utilisateur."</h1>";
-        }
+    }
 }

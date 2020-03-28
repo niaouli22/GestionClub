@@ -8,13 +8,22 @@ Liste des membres
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('contenu'); ?>
 <?php $__currentLoopData = $les_membres; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $membre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<?php if(auth()->user()): ?>
 <h3>
 <a href="/modifier/<?php echo e($membre->id); ?>"> <?php echo e($membre->prenom); ?> <?php echo e($membre->nom); ?></a>
 </h3>
+<?php else: ?>
+<h3>
+<?php echo e($membre->prenom); ?> <?php echo e($membre->nom); ?>
+
+</h3>
+<?php endif; ?>
+<?php if(auth()->guard()->check()): ?>
 <div class='h2'>
 <?php echo e($membre->adresse); ?>
 
 </div>
+<?php endif; ?>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <a href="<?php echo e(url('/creer')); ?>"> Créer nouveau membre </a>
 <?php $__env->stopSection(); ?>

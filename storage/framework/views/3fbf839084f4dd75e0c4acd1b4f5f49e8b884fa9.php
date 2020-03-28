@@ -13,7 +13,8 @@
                         </div>
                     <?php endif; ?>
 
-                    You are logged in!
+                    You are logged in! <br>
+                    <a href="<?php echo e(url('/membres')); ?>">Voir la liste des membres</a>
                 </div>
             </div>
         </div>

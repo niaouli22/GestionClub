@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Role;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +38,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+    public function hasAnyRoles($roles){
+
+        if($this->roles()->whereIn('name', $roles)->first()){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasRole($role){
+
+        if($this->roles()->where('name', $role)->first()){
+            return true;
+        }
+        return false;
+    }
+
 }

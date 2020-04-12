@@ -25,6 +25,7 @@ echo "Bonjour " . $nom;
 Route::get('nouvellepage', 'MonControleur@retourneNouvellePage');
 Route::get('exemple', 'MonControleur@retournePageExemple');
 Route::get('membres', 'ControleurMembres@index');
+Route::get('utilisateurs', 'ControleurMembres@utilisateurs');
 Route::get('membrescss', 'ControleurMembrescss@index');
 Route::get('membre/{numero}', 'ControleurMembres@afficher');
 Route::get('creer', 'ControleurMembres@creer');
@@ -35,3 +36,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/identite','ControleurMembres@identite');
 Route::get('/protege','ControleurMembres@acces_protege')->middleware('auth');
+
+//Route::resource('/admin/users', 'Admin\UsersController', ['except' => ['show', 'create', 'store']]);
+/*** 
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function(){
+    Route::resource('users', 'UsersController', ['except' => ['show', 'create', 'store']]);
+});
+*/

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 // Obligatoire pour avoir accès au modèle
 use App\Membre;
 use App\Biographie;
+use App\User;
 
 class ControleurMembres extends Controller
 {
@@ -14,25 +15,33 @@ class ControleurMembres extends Controller
     protected $les_membres;
     protected $les_biographies;
     protected $soumissions;
-    public function __construct( Membre $membres, Biographie $biographies, Request $requetes) {
+    protected $les_utilisateurs;
+
+    public function __construct( Membre $membres, Biographie $biographies, Request $requetes, User $utilisateurs) {
         $this->les_membres = $membres;
         $this->les_biographies = $biographies;
         $this->soumissions = $requetes;
+        $this->les_utilisateurs = $utilisateurs;
     }
-    
+
     public function index(){
         $les_membres = $this->les_membres->all();
         return view('pages_site/consultation_edition', compact('les_membres'));
-    } 
-    
+    }
+
+    public function utilisateurs(){
+        $les_utilisateurs = $this->les_utilisateurs->all();
+        return view('pages_site/utilisateurs', compact('les_utilisateurs'));
+    }
+
     public function afficher($numero) {
         $un_membre = membre::findOrFail($numero);
         return view('pages_site/membre', compact('un_membre'));
-    } 
+    }
     public function creer() {
         return view('pages_site/creation');
-    } 
-    
+    }
+
     public function enregistrer(Request $request) {
         $membre = new membre();
         $membre->nom = $request->nom;
@@ -47,13 +56,13 @@ class ControleurMembres extends Controller
         // Ajout d'une page de confirmation lorsqu'un membre est créé
         $confirmation = "Membre créé";
         return view('pages_site/confirmation', compact('confirmation'));
-    } 
-    
+    }
+
     public function editer($numero) {
         // Autorisation d'édition si l'utilisateur est authentifié
         if (Auth::check()){
             $un_membre = $this->les_membres->find($numero);
-            // Utilisation de condition pour rediriger la page de modification vers l'erreur 404 
+            // Utilisation de condition pour rediriger la page de modification vers l'erreur 404
             // dans le cas où le numéro ne correspond pas un membre existant
             if ($un_membre = $un_membre){
                 // Editer le champ description
@@ -75,8 +84,8 @@ class ControleurMembres extends Controller
             $confirmation = "Vous n'avez pas les droits";
             return view('pages_site/confirmation', compact('confirmation'));
         }
-    } 
-    
+    }
+
     public function miseAJour($numero) {
         $un_membre = $this->les_membres->find($numero);
         $la_soumission = $this->soumissions;
@@ -95,7 +104,7 @@ class ControleurMembres extends Controller
         {
             $une_biographie->description = $la_soumission->description;
         }
-        // Modification d'un membre lorsque le mail de l'utilisateur authentifié correspond au membre a modifier 
+        // Modification d'un membre lorsque le mail de l'utilisateur authentifié correspond au membre a modifier
         if ($une_biographie->adresse != Auth::user()->email) {
             $confirmation = "La modification n'a pas pu être réalisée";
             return view('pages_site/confirmation', compact('confirmation'));
@@ -118,7 +127,7 @@ class ControleurMembres extends Controller
             echo "<h1>Accès non autorisé</h1>";
         }
     }
-    
+
     public function acces_protege() {
         $infos_utilisateur = Auth::user();
         $utilisateur = $infos_utilisateur->name;

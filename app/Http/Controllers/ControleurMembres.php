@@ -29,6 +29,16 @@ class ControleurMembres extends Controller
         return view('pages_site/consultation_edition', compact('les_membres'));
     }
 
+    public function approbation($id)
+    {
+        $utilisateur = Auth::user()->find($id);
+        $utilisateur->status = 1;
+        $utilisateur->save();
+        $les_utilisateurs = $this->les_utilisateurs->all();
+        
+        return view('pages_site/utilisateurs', compact('les_utilisateurs'));
+    }
+
     public function utilisateurs(){
         $les_utilisateurs = $this->les_utilisateurs->all();
         return view('pages_site/utilisateurs', compact('les_utilisateurs'));

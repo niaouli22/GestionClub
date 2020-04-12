@@ -20,11 +20,11 @@
                         <tbody>
                         @foreach ($les_utilisateurs as $utilisateur)
                         <tr>
-                        @if ($utilisateur->accord == 0)
+                        @if ($utilisateur->approbation == 0)
 
                             <th>{{ $utilisateur->name }}</th>
                             <td>{{ $utilisateur->email }}</td>
-                            <td><a class="btn btn-danger" href="/accord/{{ $utilisateur->id }}">Accepter</a></td>
+                            <td><a class="btn btn-primary" href="/approbation/{{ $utilisateur->id }}">Approuver</a></td>
 
                         @endif
                         </tr>

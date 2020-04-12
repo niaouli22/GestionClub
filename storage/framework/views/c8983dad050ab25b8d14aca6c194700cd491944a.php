@@ -16,17 +16,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php $__currentLoopData = $les_users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr>
-                            <?php if($user->accord == 0): ?>
+                        <?php $__currentLoopData = $les_utilisateurs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $utilisateur): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                        <?php if($utilisateur->approbation == 0): ?>
 
-                                <th><?php echo e($user->name); ?></th>
-                                <td><?php echo e($user->email); ?></td>
-                                <td><a class="btn btn-danger" href="/accord/<?php echo e($user->id); ?>">Accepter</a></td>
+                            <th><?php echo e($utilisateur->name); ?></th>
+                            <td><?php echo e($utilisateur->email); ?></td>
+                            <td><a class="btn btn-primary" href="/approbation/<?php echo e($utilisateur->id); ?>">Approuver</a></td>
 
-                            <?php endif; ?>
-                            </tr>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         
                         </tbody>
                     </table>
